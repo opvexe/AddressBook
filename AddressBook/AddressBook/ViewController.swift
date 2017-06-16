@@ -27,12 +27,19 @@ class ViewController: UIViewController {
     fileprivate var  AuthorStore = CNContactStore.init()
     fileprivate var iphoneSouceArray = NSMutableArray.init()
     
+    
+    override func loadView() {
+        super.loadView()
+        
+        AuthorAddressBook()  //load Contact Book
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "通讯录"
         view.addSubview(AddressBookTableview)
         
-        AuthorAddressBook()  //load Contact Book
     }
 }
 
@@ -84,6 +91,7 @@ extension ViewController {  //load Contact Book
                     contactModel.iphoneNumbers = phoneNumber
                 }
                 self.iphoneSouceArray.add(contactModel)
+                
             });
             
             DispatchQueue.main.async {          //main reload UI
@@ -144,7 +152,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// 预加载 scrollViewDidScroll  _page  + =1 解决 卡顿问题 ; +(void)load 程序刚启动的时候调用，
+// 方案1 ：预加载 scrollViewDidScroll  _page  + =1 解决 卡顿问题 ; 方案2 ： +(void)load 程序刚启动的时候调用，方案3：后台异步线程加载
 
 
 
